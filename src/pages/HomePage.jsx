@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import StarIcon from '@mui/icons-material/Star';
 import { Rating } from "@mui/material";
+import { useDispatch, useSelector } from 'react-redux';
+import { addtocart, removefromcart } from '../redux/cartSlice';
 const HomePage = () => {
     const [products, setProducts] = useState([])
     const [viewall, setViewall] = useState(false)
@@ -16,14 +18,11 @@ const HomePage = () => {
         fetchproducts()
     }, [])
     const visibleprod = viewall ? products : products.slice(0, 4)
-    const [starrate, setStarrate] = useState(3)
-    console.log(products)
-    // if (Number(products.rating.rate) >= 4) {
-    //     setStarrate(4)
-    // }
-    // else {
-    //     setStarrate(3)
-    // }
+    const dispatch = useDispatch()
+    const cart = useSelector((state) => state.cart.cart)
+    console.log(cart)
+    const cartitem = (id) => cart.some((item) => item.id == id)
+
     return (
         <Box sx={{ marginTop: '90px', borderTop: '0.5px solid #000000', width: '100%' }}>
             <Grid container >
@@ -59,11 +58,16 @@ const HomePage = () => {
                                     <Box sx={{ display: 'flex', gap: '5px' }}>
                                         <Typography sx={{ fontSize: '14px' }}>{product.rating.rate} </Typography>
 
-                                        <Rating value={starrate} readOnly size="small" />
+                                        <Rating value={(product.rating.rate)} precision={0.5} readOnly size="small" />
 
                                         <Typography sx={{ fontSize: '14px', color: 'blueviolet' }}>{`(${product.rating.count})`} </Typography>
                                     </Box>
                                     <Typography sx={{ fontWeight: '600', fontSize: '16px', height: '30px', color: 'red' }}>${product.price} </Typography>
+                                    {cartitem(product.id) ?
+                                        <Button variant='contained' onClick={() => dispatch(removefromcart(product.id))}>Remove from cart</Button>
+                                        :
+                                        <Button variant='contained' onClick={() => dispatch(addtocart(product))}>Add to Cart</Button>
+                                    }
                                 </Paper>
                             </Grid>
                         )

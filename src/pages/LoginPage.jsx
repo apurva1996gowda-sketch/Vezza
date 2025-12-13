@@ -3,29 +3,41 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 import { Password } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { loggedIn } from '../redux/authSlice'
 const LoginPage = () => {
   const [logindata, setLogindata] = useState({ emailphone: '', password: '' })
   const handlechange = (e) => {
     setLogindata({ ...logindata, [e.target.name]: e.target.value })
   }
-  console.log(logindata)
-      const navigate = useNavigate()
-  const handleLogin = async () => {
-    try {
-      
-      const response = await axios.post("https://fakestoreapi.com/auth/login", {
-        "username": logindata.emailphone,
-        "password": logindata.password
-      })
-      console.log(response)
-      if(response.status===201)
-        {
-          navigate('/dashboard')
-        }
-      } catch (error) {
-        alert("please enter correct username and password")
-      }
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  // const handleLogin = async () => {
+  //   try {
+  //     const response = await axios.post("https://fakestoreapi.com/auth/login", {
+  //       "username": logindata.emailphone,
+  //       "password": logindata.password
+  //     })
+  //     console.log(response)
+  //     if (response.status === 201) {
+  //       navigate('/dashboard')
+  //       dispatch(loggedIn())
 
+  //     }
+  //   } catch (error) {
+  //     alert("please enter correct username and password")
+  //   }
+
+  // }
+  const handleLogin = () => {
+    const signupdata = JSON.parse(localStorage.getItem('signupdata'))
+    if (signupdata && signupdata.emailphone == logindata.emailphone && signupdata.password == logindata.password) {
+      navigate('/dashboard')
+      dispatch(loggedIn())
+    }
+    else {
+      alert('please enter the registered email or phone number')
+    }
   }
 
 
