@@ -64,7 +64,7 @@ const HomePage = () => {
                                     </Box>
                                     <Typography sx={{ fontWeight: '600', fontSize: '16px', height: '30px', color: 'red' }}>${product.price} </Typography>
                                     {cartitem(product.id) ?
-                                        <Button variant='contained' onClick={() => dispatch(removefromcart(product.id))}>Remove from cart</Button>
+                                        <Button variant='contained' onClick={() => dispatch(removefromcart(product.id))} sx={{bgcolor:'#fa1d0dff'}}>Remove from cart</Button>
                                         :
                                         <Button variant='contained' onClick={() => dispatch(addtocart(product))}>Add to Cart</Button>
                                     }

@@ -21,9 +21,10 @@ const CartPage = () => {
 
   return (
     <>
-      {cart == [] ? 
-      <Stack sx={{alignItems:'center',justifyContent:'center',height:'70vh'}}>
-        <Typography variant='h2'>Your vezza cart is empty</Typography>
+      {cart.length == 0 ? 
+      <Stack sx={{alignItems:'center',justifyContent:'center',gap:'30px',height:'70vh'}}>
+        <Typography variant='h4'>Your vezza cart is empty</Typography>
+        <Button onClick={()=>navigate('/dashboard')} variant='contained' sx={{bgcolor:'#f87c08ff',borderRadius:'15px'}}>Back to Shop</Button>
       </Stack>
         :
 
@@ -78,13 +79,13 @@ const CartPage = () => {
               </Table>
             </TableContainer>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Button onClick={() => {
                 navigate('/dashboard')
                 dispatch(loggedIn())
               }
-              }>Return to Shop</Button>
-              <Button>Update Cart</Button>
+              } 
+              sx={{bgcolor:'#f87c08ff',borderRadius:'15px'}} variant='contained'>Back to Shop</Button>
             </Box>
           </Box>
 

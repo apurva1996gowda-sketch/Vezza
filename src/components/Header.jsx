@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { notregistered } from '../redux/authSlice';
+import { loggedOut, notregistered } from '../redux/authSlice';
 
 const Header = () => {
     const login = useSelector((state) => state.auth.login)
@@ -14,6 +14,7 @@ const Header = () => {
     const handlesignup = (e) => {
         e.preventDefault()
         dispatch(notregistered())
+        dispatch(loggedOut())
         navigate('/register')
 
     }
