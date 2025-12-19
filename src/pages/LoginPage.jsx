@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 import { Password } from '@mui/icons-material'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { loggedIn } from '../redux/authSlice'
+import { loggedIn, loggedOut, registered } from '../redux/authSlice'
 const LoginPage = () => {
   const [logindata, setLogindata] = useState({ emailphone: '', password: '' })
   const handlechange = (e) => {
@@ -34,24 +34,32 @@ const LoginPage = () => {
     if (signupdata && signupdata.emailphone == logindata.emailphone && signupdata.password == logindata.password) {
       navigate('/dashboard')
       dispatch(loggedIn())
+      dispatch(registered())
+      localStorage.setItem('login','true')
     }
     else {
       alert('please enter the registered email or phone number')
     }
   }
 
+  useEffect(()=>{
+    dispatch(loggedOut())
+    dispatch(registered())
+    localStorage.removeItem('login')
+  })
+
 
   return (
-    <Box sx={{ marginTop: '90px', padding: '80px 53px', borderTop: '0.5px solid #000000', width: '100%' }}>
+    <Box sx={{ padding: '80px 53px', borderTop: '0.5px solid #000000', width: '100%' }}>
       <Grid container>
-        <Grid item xs={12} md={6} sx={{ maxHeight: '781px' }}>
-          <img src="/Loginpage.png" alt="" style={{ maxwidth: '683px' }} />
+        <Grid item xs={12} md={6} sx={{ maxHeight: '781px',display: { xs: 'none', md: 'flex' },justifyContent: 'center',alignItems: 'center' }}>
+          <img src="/Loginpage.png" alt="" style={{ maxwidth: '100%' }} />
         </Grid>
-        <Grid item xs={12} md={6} sx={{ display: 'flex', alignItems: 'center', pl: '150px' }}>
+        <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent:{ xs: 'center', md: 'flex-start' },alignItems: 'center', pl: { xs: 0, md: '150px' } }}>
           {/* login form */}
-          <Box component='form' sx={{ display: 'flex', flexDirection: 'column', gap: '34px', width: '371px' }}>
+          <Box component='form' sx={{ display: 'flex', flexDirection: 'column', gap: '34px', width:  { xs: '100%', sm: '80%', md: '371px' } }}>
             <Box>
-              <Typography sx={{ fontSize: '36px', fontWeight: '500', fontFamily: 'Inter', mb: '5px' }}>Log in to Exclusive</Typography>
+              <Typography sx={{ fontSize: { xs: '28px', md: '36px' }, fontWeight: '500', fontFamily: 'Inter', mb: '5px' }}>Log in to Exclusive</Typography>
               <Typography sx={{ fontSize: '16px', fontWeight: '100', fontFamily: 'Poppins' }}>Enter your details below</Typography>
             </Box>
 
@@ -67,10 +75,10 @@ const LoginPage = () => {
               value={logindata.password}
               onChange={handlechange} />
 
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              {/* Submit */}
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+              {/* Login button */}
               <Button onClick={handleLogin} variant='contained' sx={{ p: '16px 48px', bgcolor: '#DB4444', color: 'white', fontSize: '14px' }}>Log In</Button>
-              <Button variant='text' sx={{ color: '#DB4444', fontSize: '14px' }}>Forget Password?</Button>
+              <Typography sx={{fontSize:'14px'}}>Don't have an account?<span style={{fontWeight:'600'}}><Link to={'/register'}>Register</Link></span></Typography>
             </Box>
           </Box>
         </Grid>

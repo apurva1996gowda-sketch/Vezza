@@ -16,43 +16,43 @@ const CheckoutPage = () => {
 
     }
     return (
-        <Box sx={{ marginTop: '90px', padding: '40px 100px 150px 100px', borderTop: '0.5px solid #000000', width: '100%', bgcolor: '#f6f7faff' }}>
+        <Box sx={{ marginTop: 2, px:2,py:5, borderTop: '0.5px solid #000000', width: '100%', bgcolor: '#f6f7faff' }}>
             <Typography variant='h4' sx={{ mb: 5 }}>Billing Details</Typography>
             <Grid container>
-                <Grid size={6}>
+                <Grid size={{ md: 6 ,sx:12,sm:12}} sx={{}}>
                     <Stack spacing={3}>
                         <Stack spacing={1}>
                             <label htmlFor="">First Name*</label>
-                            <TextField sx={{ width: '400px', backgroundColor: '#ebe4e4ff' }} />
+                            <TextField sx={{ width: '100%',maxWidth:'400px', backgroundColor: '#ebe4e4ff' }} />
                         </Stack>
                         <Stack spacing={1}>
                             <label htmlFor="">Address*</label>
-                            <TextField sx={{ width: '400px', backgroundColor: '#ebe4e4ff' }} />
+                            <TextField sx={{ width: '100%',maxWidth:'400px', backgroundColor: '#ebe4e4ff' }} />
                         </Stack>
                         <Stack spacing={1}>
                             <label htmlFor="">Apartment, floor, etc. {`(optional)`}</label>
-                            <TextField sx={{ width: '400px', backgroundColor: '#ebe4e4ff' }} />
+                            <TextField sx={{ width: '100%',maxWidth:'400px', backgroundColor: '#ebe4e4ff' }} />
                         </Stack>
                         <Stack spacing={1}>
                             <label htmlFor="">Town/City*</label>
-                            <TextField sx={{ width: '400px', backgroundColor: '#ebe4e4ff' }} />
+                            <TextField sx={{ width: '100%',maxWidth:'400px', backgroundColor: '#ebe4e4ff' }} />
                         </Stack>
                         <Stack spacing={1}>
                             <label htmlFor="">Phone Number*</label>
-                            <TextField sx={{ width: '400px', backgroundColor: '#ebe4e4ff' }} />
+                            <TextField sx={{ width: '100%',maxWidth:'400px', backgroundColor: '#ebe4e4ff' }} />
                         </Stack>
                         <Stack spacing={1}>
                             <label htmlFor="">Email Address*</label>
-                            <TextField sx={{ width: '400px', backgroundColor: '#ebe4e4ff' }} />
+                            <TextField sx={{ width: '100%',maxWidth:'400px', backgroundColor: '#ebe4e4ff' }} />
                         </Stack>
                     </Stack>
                 </Grid>
-                <Grid size={6} sx={{ pl: '100px', pt: '10px' }}>
+                <Grid size={{ md: 6, sx: 12, sm: 12 }} sx={{ pl: 2, pt: 2 }}>
                     <Stack spacing={3}>
                         {cart?.map((item) => {
                             return (
-                                <Stack key={item.id} direction='row' spacing={6} sx={{ alignItems: 'center' }}>
-                                    <Stack direction='row' sx={{ alignItems: 'center' }}>
+                                <Stack key={item.id} direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={{ xs: 2, sm: 2, md: 6 }} sx={{ alignItems: 'center' }}>
+                                    <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} sx={{ alignItems: 'center' }}>
                                         <img src={item.image} alt="" style={{ width: '50px', height: '50px' }} />
                                         <Typography sx={{ width: '200px', height: '26px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title}</Typography>
                                     </Stack>
@@ -64,7 +64,7 @@ const CheckoutPage = () => {
                             )
                         })}
                     </Stack>
-                    <Stack sx={{ width: '400px', height: '250px', bgcolor: 'white', padding: '20px', mt: 5 }} spacing={2}>
+                    <Stack sx={{ width:'100%',maxWidth: '400px', height: '250px', bgcolor: 'white', padding: 2, mt: 5 }} spacing={2}>
 
                         <Stack direction='row' sx={{ justifyContent: 'space-between' }}>
                             <Typography variant='h6'>Subtotal: </Typography>

@@ -20,17 +20,38 @@ const HomePage = () => {
     const visibleprod = viewall ? products : products.slice(0, 4)
     const dispatch = useDispatch()
     const cart = useSelector((state) => state.cart.cart)
-    console.log(cart)
     const cartitem = (id) => cart.some((item) => item.id == id)
 
+    const handlewomenfashion = () => {
+        const womenfashion = products.filter((women) => women.category == "jewelery" || women.category == "women's clothing")
+        setProducts(womenfashion)
+    }
+    const handlemensfashion = () => {
+        const mensfashion = products.filter((mens) => mens.category == "men's clothing")
+        setProducts(mensfashion)
+    }
+    const handleelectronics = () => {
+        const electronics = products.filter((electronics) => electronics.category == "electronics")
+        setProducts(electronics)
+    }
+    console.log(products)
+
     return (
-        <Box sx={{ marginTop: '90px', borderTop: '0.5px solid #000000', width: '100%' }}>
-            <Grid container >
-                <Grid size={4} >
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px', borderRight: '0.5px solid #000000', p: '40px 135px 60px 135px' }}>
-                        <Link style={{ color: 'black', fontSize: '16px', textDecoration: 'none' }}>Woman’s Fashion</Link>
-                        <Link style={{ color: 'black', fontSize: '16px', textDecoration: 'none' }}>Men’s Fashion</Link>
-                        <Link style={{ color: 'black', fontSize: '16px', textDecoration: 'none' }}>Electronics</Link>
+        <Box sx={{ marginTop: 2, borderTop: '0.5px solid #000000', width: '100%' }}>
+            <Grid container spacing={2} sx={{ px: { xs: 2, sm: 4, md: 0 } }}>
+                <Grid item xs={12} md={4} >
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 2.5,
+                        borderRight: { md: '0.5px solid #000' },
+                        pr: { md: 10 },
+                        pl: { md: 10 },
+                        py: { xs: 2, md: 5 }
+                    }}>
+                        <Link onClick={handlewomenfashion} style={{ color: 'black', fontSize: '16px', textDecoration: 'none' }}>Woman’s Fashion</Link>
+                        <Link onClick={handlemensfashion} style={{ color: 'black', fontSize: '16px', textDecoration: 'none' }}>Men’s Fashion</Link>
+                        <Link onClick={handleelectronics} style={{ color: 'black', fontSize: '16px', textDecoration: 'none' }}>Electronics</Link>
                         <Link style={{ color: 'black', fontSize: '16px', textDecoration: 'none' }}>Home & Lifestyle</Link>
                         <Link style={{ color: 'black', fontSize: '16px', textDecoration: 'none' }}>Medicine</Link>
                         <Link style={{ color: 'black', fontSize: '16px', textDecoration: 'none' }}>Sports & Outdoor</Link>
@@ -39,17 +60,19 @@ const HomePage = () => {
                         <Link style={{ color: 'black', fontSize: '16px', textDecoration: 'none' }}>Health & Beauty</Link>
                     </Box>
                 </Grid>
-                <Grid size={8} sx={{ p: '40px 60px' }}>
+                <Grid size={8} sx={{ p: '40px 60px', display: { xs: 'none', md: 'flex' } }}>
                     <img src="/Homepage.png" alt="homepage" style={{ maxWidth: '892px', maxHeight: '344px' }} />
                 </Grid>
             </Grid>
 
-            <Box sx={{ m: '135px', mt: '70px' }}>
-                <Typography sx={{ fontSize: '36px', fontWeight: '600', textAlign: 'center', mb: '25px' }}>Explore Our Products</Typography>
+            <Box sx={{ px: { xs: 2, sm: 4, md: 10 }, my: { xs: 5, md: 10 } }}>
+                <Typography sx={{ fontSize: { xs: '24px', md: '36px' }, fontWeight: 600, textAlign: 'center', mb: 3 }}>
+                    Our Top Selling Products
+                </Typography>
                 <Grid container spacing={4}>
                     {visibleprod?.map((product) => {
                         return (
-                            <Grid size={3} key={product.id}>
+                            <Grid size={{xs:6,sm:4,md:3}} key={product.id}>
                                 <Paper elevation={0} sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                     <Box sx={{ height: '230px', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: '#F5F5F5' }}>
                                         <img src={product.image} alt={product.title} style={{ width: '150px', height: '180px' }} />
@@ -64,7 +87,7 @@ const HomePage = () => {
                                     </Box>
                                     <Typography sx={{ fontWeight: '600', fontSize: '16px', height: '30px', color: 'red' }}>${product.price} </Typography>
                                     {cartitem(product.id) ?
-                                        <Button variant='contained' onClick={() => dispatch(removefromcart(product.id))} sx={{bgcolor:'#fa1d0dff'}}>Remove from cart</Button>
+                                        <Button variant='contained' onClick={() => dispatch(removefromcart(product.id))} sx={{ bgcolor: '#fa1d0dff' }}>Remove from cart</Button>
                                         :
                                         <Button variant='contained' onClick={() => dispatch(addtocart(product))}>Add to Cart</Button>
                                     }

@@ -1,8 +1,8 @@
 import { Box, Button, Paper, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { registered } from '../redux/authSlice'
-import { useNavigate } from 'react-router-dom'
+import { notregistered, registered } from '../redux/authSlice'
+import { Link, useNavigate } from 'react-router-dom'
 
 const SignupPage = () => {
   const [submitted, setSubmitted] = useState(false)
@@ -29,14 +29,20 @@ const SignupPage = () => {
       localStorage.setItem('signupdata', JSON.stringify(signupdata))
       alert('registered successfully please login to your account')
       dispatch(registered())
+      localStorage.setItem('register', 'true')
       navigate('/')
     }
   }
 
+  useEffect(() => {
+    dispatch(notregistered())
+    localStorage.removeItem('register')
+  }, [])
+
   return (
-    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, mb: '100px' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, mb: '100px' }}>
       <Typography variant='h3' sx={{ fontFamily: 'cursive', fontWeight: '600' }}>vezza</Typography>
-      <Paper sx={{ width: '30%', padding: 5, border: '0.5px solid grey' }}>
+      <Paper sx={{ width: {xs: '100%', sm: '70%', md: '30%'}, padding: {xs: 3, sm: 4, md: 5}, border: '0.5px solid grey' }}>
         <Box component='form' sx={{ display: 'flex', flexDirection: 'column', gap: 5, alignItems: 'center' }}>
           <Typography variant='h4' >Create Account</Typography>
           {/* name field */}
@@ -70,7 +76,10 @@ const SignupPage = () => {
             onChange={handlechange}
             helperText={submitted && (signupdata.password !== signupdata.confirmpassword) ? 'password doesnt match' : ''} />
 
-          <Button onClick={handlesubmit} variant='contained' sx={{ bgcolor: 'orange', borderRadius: '10px', width: '250px' }}>Sign Up</Button>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
+            <Button onClick={handlesubmit} variant='contained' sx={{ bgcolor: 'orange', borderRadius: '10px', width: '250px' }}>Sign Up</Button>
+            <Typography sx={{ fontSize: '14px' }}>Registered already<span style={{ fontWeight: '600' }}><Link to={'/'} onClick={() => dispatch(registered())}>Login</Link></span></Typography>
+          </Box>
         </Box>
       </Paper>
     </Box>
